@@ -26,3 +26,8 @@
 2. Open open-webui
 
     http://localhost:3000
+
+3. include new modes
+
+        docker exec -it ai_ollama ollama pull <model>
+
