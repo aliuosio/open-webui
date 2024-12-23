@@ -1,6 +1,6 @@
 import requests
 
-url = "http://ollama:11434/api/generate"  # Adjust HOST if needed
+url = "http://host.docker.internal:11434/api/generate"  # Adjust HOST if needed
 payload = {
     "model": "llama3.2:latest",
     "prompt": "2+2 equals"
