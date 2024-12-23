@@ -2,7 +2,7 @@ import requests
 
 url = "http://ollama:11434/api/generate"  # Adjust HOST if needed
 payload = {
-    "model": "jimscard/blackhat-hacker",
+    "model": "llama3.2:latest",
     "prompt": "2+2 equals"
 }
 
