@@ -1,4 +1,4 @@
-# Docker Compose Project
+# Open-webui webinterface for ollama
 
 **This project uses Docker Compose to set up a multi-container environment with the following services:**
 - `ollama`: A service for the Ollama API.
