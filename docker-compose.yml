@@ -6,11 +6,11 @@ services:
     pull_policy: always
     tty: true
     restart: unless-stopped
-    environment:
-      - OLLAMA_KEEP_ALIVE=24h
-     # - NVIDIA_VISIBLE_DEVICES=all  # Make all GPUs available to the container (can be customized)
     volumes:
       - ~/.ollama:/root/.ollama
+    environment:
+      - OLLAMA_KEEP_ALIVE=24h
+    # - NVIDIA_VISIBLE_DEVICES=all  # Make all GPUs available to the container (can be customized)
     # deploy:
     #  resources:
     #    reservations:
