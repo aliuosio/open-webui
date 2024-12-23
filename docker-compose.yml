@@ -6,19 +6,18 @@ services:
     pull_policy: always
     tty: true
     restart: unless-stopped
-    volumes:
-      - ~/.ollama:/root/.ollama
+    runtime: nvidia
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: ["gpu"]
     environment:
       - OLLAMA_KEEP_ALIVE=24h
-      # - NVIDIA_VISIBLE_DEVICES=all
-   # deploy:
-   #   resources:
-   #     reservations:
-   #       devices:
-   #         - driver: nvidia
-   #           count: 1
-   #           capabilities: [gpu]
-
+      - NVIDIA_VISIBLE_DEVICES=all
+    volumes:
+      - ~/.ollama:/root/.ollama
+   
   webui:
     container_name: ${NAMESPACE}_webui
     image: ghcr.io/open-webui/open-webui:${WEBUI_DOCKER_TAG-latest}
