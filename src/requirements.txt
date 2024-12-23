@@ -1,2 +1,1 @@
-requests
-json
+Requests==2.32.3
