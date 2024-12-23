@@ -51,8 +51,6 @@ services:
     command: >
         bash -c "pip install --root-user-action=ignore -r requirements.txt &&
         tail -f /dev/null"
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
     volumes:
     - ./src:/usr/src
 
