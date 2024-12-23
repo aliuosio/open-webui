@@ -45,6 +45,7 @@ services:
   python:
     container_name: ${NAMESPACE}_python
     image: osioaliu/python:${PY_VERSION}
+  
 #    build:
 #      context: .docker/python
 #      args:
