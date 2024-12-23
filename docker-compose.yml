@@ -1,0 +1,60 @@
+services:
+  
+  ollama:
+    container_name: ollama
+    pull_policy: always
+    tty: true
+    restart: unless-stopped
+    image: ollama/ollama:${OLLAMA_DOCKER_TAG-latest}
+    environment:
+      - OLLAMA_KEEP_ALIVE=24h
+      - NVIDIA_VISIBLE_DEVICES=all  # Make all GPUs available to the container (can be customized)
+    volumes:
+      - ~/.ollama:/root/.ollama
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+  open-webui:
+    build:
+      context: .
+      args:
+        OLLAMA_BASE_URL: '/ollama'
+      dockerfile: Dockerfile
+    image: ghcr.io/open-webui/open-webui:${WEBUI_DOCKER_TAG-cuda}
+    container_name: open-webui
+    volumes:
+      - open-webui:/app/backend/data
+    depends_on:
+      - ollama
+    ports:
+      - ${OPEN_WEBUI_PORT-3000}:8080
+    environment:
+      - 'OLLAMA_BASE_URL=http://ollama:11434'
+      - 'WEBUI_SECRET_KEY='
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    restart: unless-stopped
+
+  python:
+    image: osioaliu/python:${PY_VERSION}
+    container_name: ${NAMESPACE}_python
+#    build:
+#      context: .docker/python
+#      args:
+#        PY_VERSION: ${PY_VERSION}
+    working_dir: /usr/src/
+    command: >
+        bash -c "pip install --root-user-action=ignore -r requirements.txt &&
+        tail -f /dev/null"
+    volumes:
+      - ./src:/usr/src
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+volumes:
+  open-webui: {}
