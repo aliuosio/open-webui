@@ -57,5 +57,14 @@ services:
     volumes:
     - ./src:/usr/src
 
+  watchtower:
+    container_name: ${NAMESPACE}_watchtower
+    image: containrrr/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      TZ: ${TZ}
+    command: --interval 3600
+
 volumes:
   webui: {}
