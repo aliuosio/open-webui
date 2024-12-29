@@ -53,9 +53,9 @@ services:
       - ./src:/usr/src
     command: >
       bash -c "if [ -f 'requirements.txt' ]; then
-                pip install --root-user-action=ignore -r requirements.txt;
-              fi;
-              tail -f /dev/null"
+        pip install --root-user-action=ignore -r requirements.txt;
+      fi;
+      tail -f /dev/null"
 
   watchtower:
     container_name: ${NAMESPACE}_watchtower

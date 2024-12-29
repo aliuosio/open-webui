@@ -1,7 +1,7 @@
 import requests
 import json
 
-url = "http://ollama:11434/api/generate"
+url = "http://0.0.0.0:11434/api/generate"
 
 headers = {
     "Content-Type": "application/json",
