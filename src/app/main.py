@@ -1,15 +1,14 @@
 import requests
 import json
 
-url = "http://0.0.0.0:11434/api/generate"
+
+url = "http://localhost:11434/api/generate"
 
 headers = {
     "Content-Type": "application/json",
 }
 
 payload = {
-    # "model": "jimscard/devopd:latest",
-    # "model": "gemma2:latest",
     "model": "llama3.2:latest",
     "prompt": "What is water made of?",
     "stream": False,
@@ -19,7 +18,6 @@ try:
     response = requests.post(url, headers=headers, data=json.dumps(payload))
     response.raise_for_status()  # Raise an exception for HTTP errors
     
-    # Try parsing JSON
     try:
         result = json.loads(response.text)
         print('Model: '+payload['model'])

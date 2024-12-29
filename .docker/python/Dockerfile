@@ -5,4 +5,4 @@ LABEL maintainer="Osiozekhai Aliu"
 
 RUN apk update && apk upgrade
 
-RUN apk add git build-base bash bash-completion nano
+RUN apk add git build-base bash bash-completion nano curl
