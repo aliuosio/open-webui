@@ -17,7 +17,7 @@ services:
           devices:
             - capabilities: ["gpu"]
     volumes:
-      - ~/.ollama:/root/.ollama
+      - ollama:/root/.ollama
    
   webui:
     container_name: ${NAMESPACE}_webui
@@ -69,4 +69,6 @@ services:
     command: --interval 3600
 
 volumes:
-  webui: {}
+  webui:
+  ollama:
+
