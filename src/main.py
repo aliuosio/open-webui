@@ -22,7 +22,6 @@ try:
     # Try parsing JSON
     try:
         result = json.loads(response.text)
-
         print('Model: '+payload['model'])
         print('Prompt: '+payload['prompt'])
         print('Result')

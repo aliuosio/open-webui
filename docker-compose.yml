@@ -30,7 +30,7 @@ services:
       - host.docker.internal:host-gateway
     restart: unless-stopped
     environment:
-      - 'OLLAMA_BASE_URL=http://ollama:11434'
+      - 'OLLAMA_BASE_URL=${OLLAMA_BASE_URL}'
       - NVIDIA_VISIBLE_DEVICES=all
     runtime: nvidia
     deploy:
@@ -44,10 +44,10 @@ services:
   python:
     container_name: ${NAMESPACE}_python
     image: osioaliu/python:${PY_VERSION}
-    build:
-      context: .docker/python
-      args:
-        PY_VERSION: ${PY_VERSION}
+    #build:
+    #  context: .docker/python
+    #  args:
+    #    PY_VERSION: ${PY_VERSION}
     working_dir: /usr/src/
     command: >
         bash -c "pip install --root-user-action=ignore -r requirements.txt &&
