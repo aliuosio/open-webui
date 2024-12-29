@@ -4,51 +4,69 @@ services:
     container_name: ${NAMESPACE}_ollama
     image: ollama/ollama:${OLLAMA_DOCKER_TAG-latest}
     pull_policy: always
-    tty: true
     restart: unless-stopped
-    volumes:
-      - ~/.ollama:/root/.ollama
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     environment:
       - OLLAMA_KEEP_ALIVE=24h
-      # - NVIDIA_VISIBLE_DEVICES=all
-   # deploy:
-   #   resources:
-   #     reservations:
-   #       devices:
-   #         - driver: nvidia
-   #           count: 1
-   #           capabilities: [gpu]
-
+      - NVIDIA_VISIBLE_DEVICES=all
+    runtime: nvidia
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: ["gpu"]
+    volumes:
+      - ollama:/root/.ollama
+   
   webui:
     container_name: ${NAMESPACE}_webui
-    image: ghcr.io/open-webui/open-webui:${WEBUI_DOCKER_TAG-latest}
-    volumes:
-      - webui:/app/backend/data
+    image: ghcr.io/open-webui/open-webui:${WEBUI_DOCKER_TAG-cuda}
     depends_on:
       - ollama
     ports:
       - ${OPEN_WEBUI_PORT-3000}:8080
-    environment:
-      - 'OLLAMA_BASE_URL=http://ollama:11434'
     extra_hosts:
       - host.docker.internal:host-gateway
     restart: unless-stopped
+    environment:
+      - 'OLLAMA_BASE_URL=${OLLAMA_BASE_URL}'
+      - NVIDIA_VISIBLE_DEVICES=all
+    runtime: nvidia
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: ["gpu"]
+    volumes:
+      - webui:/app/backend/data
 
   python:
     container_name: ${NAMESPACE}_python
     image: osioaliu/python:${PY_VERSION}
-#    build:
-#      context: .docker/python
-#      args:
-#        PY_VERSION: ${PY_VERSION}
+    #build:
+    #  context: .docker/python
+    #  args:
+    #    PY_VERSION: ${PY_VERSION}
     working_dir: /usr/src/
-    command: >
-        bash -c "pip install --root-user-action=ignore -r requirements.txt &&
-        tail -f /dev/null"
     volumes:
       - ./src:/usr/src
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+    command: >
+      bash -c "if [ -f 'requirements.txt' ]; then
+                pip install --root-user-action=ignore -r requirements.txt;
+              fi;
+              tail -f /dev/null"
+
+  watchtower:
+    container_name: ${NAMESPACE}_watchtower
+    image: containrrr/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      TZ: ${TZ}
+    command: --interval 3600 --cleanup  
 
 volumes:
-  webui: {}
+  webui:
+  ollama:
+
