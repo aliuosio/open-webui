@@ -49,15 +49,13 @@ services:
     #  args:
     #    PY_VERSION: ${PY_VERSION}
     working_dir: /usr/src/
+    volumes:
+      - ./src:/usr/src
     command: >
-        bash -c "
-        if [ -f 'requirements.txt' ]; then
-            pip install --root-user-action=ignore -r requirements.txt &&
-        fi
-        tail -f /dev/null
-        "
-
-  
+      bash -c "if [ -f 'requirements.txt' ]; then
+                pip install --root-user-action=ignore -r requirements.txt;
+              fi;
+              tail -f /dev/null"
 
   watchtower:
     container_name: ${NAMESPACE}_watchtower
@@ -66,7 +64,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
       TZ: ${TZ}
-    command: --interval 3600
+    command: --interval 3600 --cleanup  
 
 volumes:
   webui:
