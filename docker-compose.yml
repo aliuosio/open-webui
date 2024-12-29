@@ -50,8 +50,13 @@ services:
     #    PY_VERSION: ${PY_VERSION}
     working_dir: /usr/src/
     command: >
-        bash -c "pip install --root-user-action=ignore -r requirements.txt &&
-        tail -f /dev/null"
+        bash -c "
+        if [ -f 'requirements.txt' ]; then
+            pip install --root-user-action=ignore -r requirements.txt &&
+        fi
+        tail -f /dev/null
+        "
+
   
 
   watchtower:
