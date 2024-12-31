@@ -51,10 +51,10 @@ services:
                 - gpu
 
   python:
-    build:
-      context: .docker/python
-      args:
-        PY_VERSION: ${PY_VERSION}
+    #build:
+    #  context: .docker/python
+    #  args:
+    #    PY_VERSION: ${PY_VERSION}
     container_name: ${NAMESPACE}_python
     depends_on:
       - ollama
@@ -68,17 +68,8 @@ services:
     working_dir: /usr/src/
     volumes:
       - ./src:/usr/src
-    command: >
-      bash -c "if [ -f 'requirements.txt' ]; then
-        pip install --root-user-action=ignore -r requirements.txt;
-      fi;
-      tail -f /dev/null
-      "
+    command: "tail -f /dev/null"
 
 volumes:
   webui:
   ollama:
-
-networks:
-  default:
-    driver: bridge

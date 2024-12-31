@@ -15,4 +15,5 @@ RUN apk add --no-cache \
     build-base \
     bash \
     bash-completion \
-    nano
+    nano \
+    curl
