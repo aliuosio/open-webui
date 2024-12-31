@@ -78,3 +78,7 @@ services:
 volumes:
   webui:
   ollama:
+
+networks:
+  default:
+    driver: bridge
