@@ -51,10 +51,10 @@ services:
                 - gpu
 
   python:
-    build:
-      context: .docker/python
-      args:
-        PY_VERSION: ${PY_VERSION}
+    #build:
+    #  context: .docker/python
+    #  args:
+    #    PY_VERSION: ${PY_VERSION}
     container_name: ${NAMESPACE}_python
     depends_on:
       - ollama
@@ -73,7 +73,3 @@ services:
 volumes:
   webui:
   ollama:
-
-networks:
-  default:
-    driver: bridge
