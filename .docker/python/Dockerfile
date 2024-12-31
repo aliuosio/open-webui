@@ -5,4 +5,14 @@ LABEL maintainer="Osiozekhai Aliu"
 
 RUN apk update && apk upgrade
 
-RUN apk add git build-base bash bash-completion nano curl
+RUN apk add --no-cache \
+    gcc \
+    g++ \
+    musl-dev \
+    python3-dev \
+    libffi-dev \
+    git \
+    build-base \
+    bash \
+    bash-completion \
+    nano
