@@ -9,15 +9,14 @@ headers = {
 
 payload = {
     "model": "llama3.2:3b",
-    "prompt": "What is water made of?",
+    "prompt": "Describe the chemical element:water",
     "stream": False,
 }
 
 try:
     response = requests.post(url, headers=headers, data=json.dumps(payload))
-    response.raise_for_status()  # Raise an exception for HTTP errors
+    response.raise_for_status()
 
-    # Try parsing JSON
     try:
         result = json.loads(response.text)
         print('Model: '+payload['model'])
@@ -29,5 +28,4 @@ try:
 except requests.exceptions.RequestException as e:
     print(f"HTTP Request Error: {e}")
 
-
-# curl http://localhost:11434/api/generate -d '{ "model": "llama3.2:3b", "prompt": "What is water made of?" }'
+# curl http://ollama:11434/api/generate -d '{ "model": "llama3.2:3b", "prompt": "What is water made of?" }'
