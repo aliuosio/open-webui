@@ -50,6 +50,8 @@ services:
     #  args:
     #    PY_VERSION: ${PY_VERSION}
     container_name: ${NAMESPACE}_python
+    depends_on:
+      - ollama
     image: osioaliu/python:${PY_VERSION}
     tty: true
     extra_hosts:
