@@ -1,31 +1,14 @@
 services:
-  
-  ollama:
-    container_name: ${NAMESPACE}_ollama
-    image: ollama/ollama:${OLLAMA_DOCKER_TAG-latest}
-    pull_policy: always
-    restart: unless-stopped
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
-    environment:
-      - OLLAMA_KEEP_ALIVE=24h
-      - NVIDIA_VISIBLE_DEVICES=all
-    runtime: nvidia
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - capabilities: ["gpu"]
-    volumes:
-      - ollama:/root/.ollama
-   
+
   webui:
     container_name: ${NAMESPACE}_webui
-    image: ghcr.io/open-webui/open-webui:${WEBUI_DOCKER_TAG-cuda}
+    image: ghcr.io/open-webui/open-webui:latest-cuda
+    pull_policy: always
+    tty: true
     depends_on:
       - ollama
     ports:
-      - ${OPEN_WEBUI_PORT-3000}:8080
+      - "3000:8080"
     extra_hosts:
       - host.docker.internal:host-gateway
     restart: unless-stopped
@@ -33,38 +16,53 @@ services:
       - 'OLLAMA_BASE_URL=${OLLAMA_BASE_URL}'
       - NVIDIA_VISIBLE_DEVICES=all
     runtime: nvidia
+    volumes:
+      - webui:/app/backend/data
     deploy:
       resources:
         reservations:
           devices:
             - capabilities: ["gpu"]
+
+  ollama:
+    container_name: ${NAMESPACE}_ollama
+    image: ollama/ollama:latest
+    pull_policy: always
+    restart: unless-stopped
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    environment:
+      - OLLAMA_KEEP_ALIVE=24h
+      - NVIDIA_VISIBLE_DEVICES=all
+    runtime: nvidia
+    tty: true
     volumes:
-      - webui:/app/backend/data
+      - ollama:/root/.ollama
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: ["gpu"]
 
   python:
-    container_name: ${NAMESPACE}_python
-    image: osioaliu/python:${PY_VERSION}
     #build:
     #  context: .docker/python
     #  args:
     #    PY_VERSION: ${PY_VERSION}
+    container_name: ${NAMESPACE}_python
+    image: osioaliu/python:${PY_VERSION}
+    tty: true
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    environment:
+      - 'OLLAMA_BASE_URL=${OLLAMA_BASE_URL}'
     working_dir: /usr/src/
     volumes:
       - ./src:/usr/src
     command: >
       bash -c "if [ -f 'requirements.txt' ]; then
                 pip install --root-user-action=ignore -r requirements.txt;
-              fi;
-              tail -f /dev/null"
-
-  watchtower:
-    container_name: ${NAMESPACE}_watchtower
-    image: containrrr/watchtower
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    environment:
-      TZ: ${TZ}
-    command: --interval 3600 --cleanup  
+              fi;"
 
 volumes:
   webui:
