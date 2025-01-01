@@ -14,7 +14,7 @@
 
 1. Clone the repository:
 
-        git clone https://github.com/aliuosioopen-webui.git
+        git clone git@github.com:aliuosio/open-webui.git
         cd open-webui
 
 ## Usage
