@@ -1,0 +1,4 @@
+/.idea/
+/searxng/settings.yml
+/searxng/uwsgi.ini
+/src/*
