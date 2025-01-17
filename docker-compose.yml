@@ -92,7 +92,7 @@ services:
       depends_on:
         - ollama
       volumes:
-        - ./src:/src
+        - ./src:/app
         - ~/obsidian:/obsidian
       tty: true
       env_file:
