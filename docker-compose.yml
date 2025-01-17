@@ -60,7 +60,7 @@ services:
               count: 1
               capabilities:
                 - gpu
-                
+
   searxng:
     container_name: ${NAMESPACE}_searxng
     image: searxng/searxng:latest
@@ -83,22 +83,22 @@ services:
       options:
         max-size: "1m"
         max-file: "1"
-        
+
   fabric:
-      container_name: ${NAMESPACE}_fabric
-      image: osioaliu/fabric:latest
-      pull_policy: always
-      entrypoint: ["/bin/bash", "/entrypoint.sh"]
-      command: ["/bin/bash", "-c", "tail -f /dev/null"]
-      depends_on:
-        - ollama
-      volumes:
-        - ./.docker/fabric/entrypoint.sh:/entrypoint.sh
-        - ./src:/app
-        - ~/obsidian:/obsidian
-      tty: true
-      env_file:
-        - .env
+    container_name: ${NAMESPACE}_fabric
+    image: osioaliu/fabric:latest
+    pull_policy: always
+    #entrypoint: ["/entrypoint.sh"]
+    command: [ "/bin/bash", "-c", "tail -f /dev/null" ]
+    depends_on:
+      - ollama
+    volumes:
+      - .docker/fabric/entrypoint.sh:/entrypoint.sh
+      - ./src:/app
+      - ~/obsidian:/obsidian
+    tty: true
+    env_file:
+      - .env
 
   python:
     build:
