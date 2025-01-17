@@ -91,9 +91,9 @@ services:
       command: ["/bin/bash", "-c", "tail -f /dev/null"]
       depends_on:
         - ollama
-      #volumes:
-      #  - ./src:/src
-      #  - ~/obsidian:/obsidian
+      volumes:
+        - ./src:/src
+        - ~/obsidian:/obsidian
       tty: true
       env_file:
         - .env
