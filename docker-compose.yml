@@ -88,10 +88,12 @@ services:
       container_name: ${NAMESPACE}_fabric
       image: osioaliu/fabric:latest
       pull_policy: always
+      entrypoint: ["/bin/bash", "/entrypoint.sh"]
       command: ["/bin/bash", "-c", "tail -f /dev/null"]
       depends_on:
         - ollama
       volumes:
+        - ./.docker/fabric/entrypoint.sh:/entrypoint.sh
         - ./src:/app
         - ~/obsidian:/obsidian
       tty: true
