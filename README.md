@@ -11,6 +11,11 @@ A Docker Compose setup for running a Web UI, Ollama, Python, SearxNG, and Fabric
 
 The Web UI is accessible at `http://localhost:3000`.
 
+## Fabric Usage
+
+    docker compose exec fabric bash
+    source .bashrc
+
 - **webui**: This is the Web UI component of the project. It is available on port 3000 of the host and depends on the Ollama service.
 - **ollama**: This is the Ollama service, which is required by the webui.
 - **python**: This is the Python service, which depends on the Ollama service. It is running in the `/usr/src` directory in the container.
@@ -27,11 +32,6 @@ To enable Docker to use NVIDIA drivers on a Linux system, follow these steps:
     sudo apt-get install -y nvidia-container-toolkit
     sudo nvidia-ctk runtime configure --runtime=docker
     sudo systemctl restart docker
-    ```
-
-2. Verify the installation:
-    ```sh
-    docker run --rm --gpus all nvidia/cuda:11.0-base nvidia-smi
     ```
 
 This should display the NVIDIA System Management Interface (nvidia-smi) output, confirming that Docker can access the GPU.
