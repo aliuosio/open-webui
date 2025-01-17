@@ -88,12 +88,12 @@ services:
       container_name: ${NAMESPACE}_fabric
       image: osioaliu/fabric:latest
       pull_policy: always
-      command: ["/bin/bash", "-c", "source /.bashrc && tail -f /dev/null"]
+      command: ["/bin/bash", "-c", "tail -f /dev/null"]
       depends_on:
         - ollama
-      volumes:
-        - ./src:/src
-        - ~/obsidian:/obsidian
+      # volumes:
+      #   - ./src:/src
+      #   - ~/obsidian:/obsidian
       tty: true
       env_file:
         - .env
