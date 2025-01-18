@@ -4,9 +4,6 @@ services:
     container_name: ${NAMESPACE}_webui
     image: ghcr.io/open-webui/open-webui:latest-cuda
     pull_policy: always
-    tty: true
-    env_file:
-      - .env
     depends_on:
       - ollama
     ports:
@@ -40,8 +37,6 @@ services:
     image: ollama/ollama:latest
     pull_policy: always
     restart: unless-stopped
-    env_file:
-      - .env
     extra_hosts:
       - "host.docker.internal:host-gateway"
     environment:
@@ -68,8 +63,6 @@ services:
       - "8080:8080"
     volumes:
       - ./searxng:/etc/searxng:rw
-    env_file:
-      - .env
     restart: unless-stopped
     cap_drop:
       - ALL
@@ -95,8 +88,6 @@ services:
         - ./src:/src
         - ~/obsidian:/obsidian
       tty: true
-      env_file:
-        - .env
 
   python:
     build:
@@ -108,8 +99,6 @@ services:
       - ollama
     image: osioaliu/python-rust:${PY_VERSION}
     tty: true
-    env_file:
-      - .env
     extra_hosts:
       - "host.docker.internal:host-gateway"
     environment:
@@ -117,5 +106,5 @@ services:
       - 'OLLAMA_BASE_URL=${OLLAMA_BASE_URL}'
     working_dir: /usr/src/
     volumes:
-      - ./src:/usr/src
+      - ./src:/src
     command: "tail -f /dev/null"
