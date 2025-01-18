@@ -89,11 +89,9 @@ services:
         - ~/obsidian:/obsidian
       tty: true
   
-  crawler:
-    container_name: ${NAMESPACE}_crawler
-    image: ghcr.io/obeone/crawler-to-md:latest
-    volumes:
-      - ./src/crawler-output:/src/crawler-output
+ # docker run --rm -v $(pwd)/output:/src/output -v cache:/app/cache ghcr.io/obeone/crawler-to-md --url <URL>
+
+
 
   # python:
   #   build:
