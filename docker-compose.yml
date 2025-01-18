@@ -89,7 +89,7 @@ services:
         - ~/obsidian:/obsidian
       tty: true
   
- # docker run --rm -v $(pwd)/output:/src/output -v cache:/app/cache ghcr.io/obeone/crawler-to-md --url <URL>
+ # docker run --rm -v $(pwd)/output:/src/output -v cache:/app/cache ghcr.io/obeone/crawler-to-md --output-folder /src/output--url <URL>
 
 
 
