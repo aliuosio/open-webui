@@ -115,8 +115,8 @@ services:
     working_dir: /usr/src/app
     volumes:
       - ./src:/src
-    ports:
-      - "3000:3000"
+    #ports:
+    #  - "3000:3000"
     #command: ["npm", "start"]
 
   crawler:
@@ -124,5 +124,3 @@ services:
     image: ghcr.io/obeone/crawler-to-md:latest
     volumes:
       - ./src/crawler-output:/src/crawler-output
-      - cache:/app/cache
-    restart: unless-stopped
