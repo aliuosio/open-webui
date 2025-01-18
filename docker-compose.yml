@@ -89,8 +89,8 @@ services:
         - ~/obsidian:/obsidian
       tty: true
   
- # docker run --rm -v $(pwd)/output:/src/output -v cache:/app/cache ghcr.io/obeone/crawler-to-md --output-folder /src/crawler-output --url <URL>
-
+ # docker run --rm -v ./src:/src/ -v cache:/app/cache ghcr.io/obeone/crawler-to-md --output-folder /src/crawler-output --url <URL>
+# https://www.portainer.io/blog/stacks-docker-compose-the-portainer-way
 
 
   # python:
