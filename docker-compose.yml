@@ -107,7 +107,7 @@ services:
     working_dir: /src
     volumes:
       - ./src:/src
-    command: "tail -f /dev/null"
+    #command: "tail -f /dev/null"
 
   node:
     image: node:18
@@ -117,12 +117,11 @@ services:
       - ./src:/src
     ports:
       - "3000:3000"
-    command: ["npm", "start"]
+    #command: ["npm", "start"]
 
   crawler:
     container_name: ${NAMESPACE}_crawler
     image: ghcr.io/obeone/crawler-to-md:latest
-    command: ["--url", "<URL>"]
     volumes:
       - ./src/crawler-output:/src/crawler-output
       - cache:/app/cache
