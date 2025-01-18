@@ -124,3 +124,14 @@ services:
     image: ghcr.io/obeone/crawler-to-md:latest
     volumes:
       - ./src/crawler-output:/src/crawler-output
+
+  portainer:
+      image: portainer/portainer
+      volumes:
+        - /var/run/docker.sock:/var/run/docker.sock
+        - portainer_data:/data
+      ports:
+        - "9001:9000"
+      
+  volumes:
+    portainer_data:
