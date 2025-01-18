@@ -109,12 +109,21 @@ services:
       - ./src:/src
     command: "tail -f /dev/null"
 
-  nodeapp:
+  node:
     image: node:18
-    container_name: nodeapp
+    container_name: ${NAMESPACE}_node
     working_dir: /usr/src/app
     volumes:
       - ./src:/src
     ports:
       - "3000:3000"
     command: ["npm", "start"]
+
+  crawler:
+    container_name: ${NAMESPACE}_crawler
+    image: ghcr.io/obeone/crawler-to-md:latest
+    command: ["--url", "<URL>"]
+    volumes:
+      - ./src/crawler-output:/src/crawler-output
+      - cache:/app/cache
+    restart: unless-stopped
