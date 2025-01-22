@@ -28,10 +28,5 @@ Please note that this service is configured for GPU acceleration and requires NV
 To enable Docker to use NVIDIA drivers on a Linux system, follow these steps:
 
 1. Install the NVIDIA Container Toolkit:
-    ```sh
-    sudo apt-get install -y nvidia-container-toolkit
-    sudo nvidia-ctk runtime configure --runtime=docker
-    sudo systemctl restart docker
-    ```
 
-This should display the NVIDIA System Management Interface (nvidia-smi) output, confirming that Docker can access the GPU.
+	https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html

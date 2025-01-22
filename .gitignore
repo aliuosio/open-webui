@@ -1,4 +1,4 @@
-/.idea/
-/searxng/settings.yml
-/searxng/uwsgi.ini
 /app/*
+scraping
+searxng/
+src/
