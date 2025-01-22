@@ -3,3 +3,4 @@
 /searxng/uwsgi.ini
 /src/*
 !/src/.gitkeep
+searxng/settings.yml.new
