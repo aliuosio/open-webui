@@ -1,6 +1,3 @@
-/.idea/
-/searxng/settings.yml
-/searxng/uwsgi.ini
-/src/*
-!/src/.gitkeep
-searxng/settings.yml.new
+scraping
+searxng/
+src/
