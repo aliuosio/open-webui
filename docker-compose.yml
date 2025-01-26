@@ -78,40 +78,59 @@ services:
         max-file: "1"
 
   fabric:
-      container_name: ${NAMESPACE}_fabric
-      image: osioaliu/fabric:latest
-      pull_policy: always
-      command: ["/bin/bash", "-c", "tail -f /dev/null"]
-      depends_on:
-        - ollama
-      volumes:
-        - ./src:/src
-        - ~/obsidian:/obsidian
-      tty: true
+    container_name: ${NAMESPACE}_fabric
+    image: osioaliu/fabric:latest
+    pull_policy: always
+    command: ["/bin/bash", "-c", "tail -f /dev/null"]
+    depends_on:
+      - ollama
+    volumes:
+      - ./src:/src
+      - ~/obsidian:/obsidian
+    tty: true
   
- # docker run --rm -v ./src:/src/ -v cache:/app/cache ghcr.io/obeone/crawler-to-md --output-folder /src/crawler-output --url <URL>
+# docker run --rm -v ./src:/src/ -v cache:/app/cache ghcr.io/obeone/crawler-to-md --output-folder /src/crawler-output --url <URL
 # https://www.portainer.io/blog/stacks-docker-compose-the-portainer-way
 
 
-  python:
-    build:
-     context: .docker/python
-     args:
-       PY_VERSION: ${PY_VERSION}
-    container_name: ${NAMESPACE}_python
-    depends_on:
-     - ollama
-    image: osioaliu/python-rust:${PY_VERSION}
-    tty: true
-    extra_hosts:
-     - "host.docker.internal:host-gateway"
-    environment:
-     - 'TZ=${TZ}'
-     - 'OLLAMA_BASE_URL=${OLLAMA_BASE_URL}'
-    working_dir: /src
-    volumes:
-     - ./src:/src
-    command: "tail -f /dev/null"
+  # crewai:
+  #   container_name: ${NAMESPACE}_crewai
+  #   image: sageil/crewai:latest
+  #   pull_policy: always
+  #   depends_on:
+  #     - ollama
+  #   tty: true
+  #   extra_hosts:
+  #     - "host.docker.internal:host-gateway"
+  #   environment:
+  #     - 'TZ=${TZ}'
+  #     - 'OLLAMA_BASE_URL=${OLLAMA_BASE_URL}'
+  #     - 'P=new'
+  #   working_dir: /crewai
+  #   command: "tail -f /dev/null"
+  #   volumes:
+  #     - ./crewai:/crewai
+
+
+  # python:
+  #   build:
+  #    context: .docker/python
+  #    args:
+  #      PY_VERSION: ${PY_VERSION}
+  #   container_name: ${NAMESPACE}_python
+  #   depends_on:
+  #    - ollama
+  #   image: osioaliu/python-rust:${PY_VERSION}
+  #   tty: true
+  #   extra_hosts:
+  #    - "host.docker.internal:host-gateway"
+  #   environment:
+  #    - 'TZ=${TZ}'
+  #    - 'OLLAMA_BASE_URL=${OLLAMA_BASE_URL}'
+  #   working_dir: /src
+  #   volumes:
+  #    - ./src:/src
+  #   command: "tail -f /dev/null"
 
   # node:
   #   image: node:18
@@ -132,5 +151,5 @@ services:
   #   ports:
   #     - "9001:9000"
       
-volumes:
-  portainer_data:
+#volumes:
+ # portainer_data:

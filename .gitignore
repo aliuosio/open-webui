@@ -1,4 +1,6 @@
 /app/*
 scraping
 searxng/
-src/
+src/.vscode/
+.vscode/
+src/*
