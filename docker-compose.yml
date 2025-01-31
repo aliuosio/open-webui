@@ -1,7 +1,7 @@
 services:
 
-  webui:
-    container_name: ${NAMESPACE}_webui
+  open-webui:
+    container_name: ${NAMESPACE}_open-webui
     image: ghcr.io/open-webui/open-webui:latest-cuda
     pull_policy: always
     depends_on:
@@ -15,6 +15,11 @@ services:
       - OLLAMA_BASE_URL=${OLLAMA_BASE_URL}
       - NVIDIA_VISIBLE_DEVICES=all
       - CUDA_VISIBLE_DEVICES=0
+      - ENABLE_RAG_WEB_SEARCH=True
+      - RAG_WEB_SEARCH_ENGINE="searxng"
+      - RAG_WEB_SEARCH_RESULT_COUNT=3
+      - RAG_WEB_SEARCH_CONCURRENT_REQUESTS=10
+      - SEARXNG_QUERY_URL="http://searxng:8080/search?q=<query>"
     runtime: nvidia
     volumes:
       - ~/.webui:/app/backend/data
