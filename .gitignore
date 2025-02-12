@@ -4,3 +4,4 @@ searxng/
 src/.vscode/
 .vscode/
 src/*
+.idea/

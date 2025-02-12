@@ -15,11 +15,6 @@ services:
       - OLLAMA_BASE_URL=${OLLAMA_BASE_URL}
       - NVIDIA_VISIBLE_DEVICES=all
       - CUDA_VISIBLE_DEVICES=0
-      - ENABLE_RAG_WEB_SEARCH=True
-      - RAG_WEB_SEARCH_ENGINE="searxng"
-      - RAG_WEB_SEARCH_RESULT_COUNT=3
-      - RAG_WEB_SEARCH_CONCURRENT_REQUESTS=10
-      - SEARXNG_QUERY_URL="http://searxng:8080/search?q=<query>"
     runtime: nvidia
     volumes:
       - ~/.webui:/app/backend/data
@@ -57,13 +52,14 @@ services:
                 - gpu
 
   fabric:
+    build:
+      context: ./.docker/fabric
+      args:
+        GO_IMAGE_VERSION: ${GO_IMAGE_VERSION}
     container_name: ${NAMESPACE}_fabric
     image: osioaliu/fabric:latest
-    pull_policy: always
-    command: ["/bin/bash", "-c", "tail -f /dev/null"]
+    command: ["/bin/bash", "-c", "source /root/.bashrc && tail -f /dev/null"]
+    # entrypoint: /root/entrypoint.sh
     depends_on:
       - ollama
-    volumes:
-      - ./src:/src
-      - ~/obsidian:/obsidian
     tty: true
