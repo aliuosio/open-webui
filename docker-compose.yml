@@ -59,7 +59,6 @@ services:
     container_name: ${NAMESPACE}_fabric
     image: osioaliu/fabric:latest
     command: ["/bin/bash", "-c", "source /root/.bashrc && tail -f /dev/null"]
-    # entrypoint: /root/entrypoint.sh
     depends_on:
       - ollama
     tty: true
